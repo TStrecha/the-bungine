@@ -1,7 +1,7 @@
-package eu.tstrecha.bungine.core.window;
+package org.thebungine.engine.window;
 
-import eu.tstrecha.bungine.core.event.EventDispatcher;
-import eu.tstrecha.bungine.core.event.WindowCloseEvent;
+import org.thebungine.engine.event.EventDispatcher;
+import org.thebungine.engine.event.WindowCloseEvent;
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;

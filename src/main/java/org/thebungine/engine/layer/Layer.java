@@ -1,6 +1,6 @@
-package eu.tstrecha.bungine.core.layer;
+package org.thebungine.engine.layer;
 
-import eu.tstrecha.bungine.core.event.Event;
+import org.thebungine.engine.event.Event;
 
 public abstract class Layer {
 

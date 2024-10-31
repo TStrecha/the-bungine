@@ -1,4 +1,4 @@
-package eu.tstrecha.bungine.core.window;
+package org.thebungine.engine.window;
 
 public interface Window {
 

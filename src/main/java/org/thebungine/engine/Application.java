@@ -1,11 +1,11 @@
-package eu.tstrecha.bungine.core;
+package org.thebungine.engine;
 
-import eu.tstrecha.bungine.core.event.Event;
-import eu.tstrecha.bungine.core.event.EventDispatcher;
-import eu.tstrecha.bungine.core.event.WindowCloseEvent;
-import eu.tstrecha.bungine.core.layer.Layer;
-import eu.tstrecha.bungine.core.layer.LayerStack;
-import eu.tstrecha.bungine.core.window.Window;
+import org.thebungine.engine.event.Event;
+import org.thebungine.engine.event.EventDispatcher;
+import org.thebungine.engine.event.WindowCloseEvent;
+import org.thebungine.engine.layer.Layer;
+import org.thebungine.engine.layer.LayerStack;
+import org.thebungine.engine.window.Window;
 import lombok.Setter;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;

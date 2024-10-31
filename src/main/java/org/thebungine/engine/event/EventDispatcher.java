@@ -1,4 +1,4 @@
-package eu.tstrecha.bungine.core.event;
+package org.thebungine.engine.event;
 
 import java.util.ArrayList;
 import java.util.HashMap;

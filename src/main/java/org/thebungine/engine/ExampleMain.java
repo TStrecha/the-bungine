@@ -1,7 +1,7 @@
-package eu.tstrecha.bungine.core;
+package org.thebungine.engine;
 
-import eu.tstrecha.bungine.core.window.WindowProperties;
-import eu.tstrecha.bungine.core.window.WindowsWindow;
+import org.thebungine.engine.window.WindowProperties;
+import org.thebungine.engine.window.WindowsWindow;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

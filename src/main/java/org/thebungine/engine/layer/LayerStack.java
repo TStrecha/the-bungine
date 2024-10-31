@@ -1,4 +1,4 @@
-package eu.tstrecha.bungine.core.layer;
+package org.thebungine.engine.layer;
 
 import lombok.Getter;
 
