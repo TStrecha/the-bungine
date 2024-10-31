@@ -1,0 +1,29 @@
+name: Major Version Bump
+
+permissions:
+  contents: write
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Latest Commit
+        uses: actions/checkout@v4
+
+      - name: Bump Version
+        id: release-major
+        uses: PrismJ/maven-version-updater-action@v1
+        with:
+          type: 'major'
+          github-token: ${{ secrets.github_token }}
+
+      - name: Create Snapshot
+        id: snapshot
+        uses: PrismJ/maven-version-updater-action@v1
+        with:
+          type: 'snapshot'
+          github-token: ${{ secrets.github_token }}
