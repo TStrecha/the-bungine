@@ -16,7 +16,7 @@ jobs:
 
       - name: Create Snapshot
         id: snapshot
-        uses: PrismJ/maven-version-updater-action@v1
+        uses: PrismJ/maven-version-updater-action@v1.1
         with:
           type: 'snapshot'
           bump-version: false

@@ -16,14 +16,14 @@ jobs:
 
       - name: Bump Version
         id: release-major
-        uses: PrismJ/maven-version-updater-action@v1
+        uses: PrismJ/maven-version-updater-action@v1.1
         with:
           type: 'major'
           github-token: ${{ secrets.github_token }}
 
       - name: Create Snapshot
         id: snapshot
-        uses: PrismJ/maven-version-updater-action@v1
+        uses: PrismJ/maven-version-updater-action@v1.1
         with:
           type: 'snapshot'
           github-token: ${{ secrets.github_token }}
