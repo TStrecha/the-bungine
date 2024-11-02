@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   workflow_run:
-    workflows: [ "Branch Version Bump", "Major Version Bump", "Minor Version Bump", "Patch Version Bump" ]
+    workflows: [ Branch Version Bump, Major Version Bump, Minor Version Bump, Patch Version Bump ]
     types:
       - completed
   workflow_dispatch:
