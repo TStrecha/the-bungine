@@ -7,6 +7,17 @@
     <artifactId>engine</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <distributionManagement>
+        <repository>
+            <id>tstrecha-nexus</id>
+            <url>https://nexus.tstrecha.cz/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>tstrecha-nexus</id>
+            <url>https://nexus.tstrecha.cz/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <properties>
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
