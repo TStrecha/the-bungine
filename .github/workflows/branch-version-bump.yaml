@@ -2,6 +2,7 @@ name: Branch Version Bump
 
 permissions:
   contents: write
+  actions: write
 
 on: [push]
 

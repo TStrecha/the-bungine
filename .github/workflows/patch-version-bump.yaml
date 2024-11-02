@@ -2,6 +2,7 @@ name: Patch Version Bump
 
 permissions:
   contents: write
+  actions: write
 
 on: [workflow_dispatch]
 
