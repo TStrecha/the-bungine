@@ -72,6 +72,11 @@ public class WindowsWindow implements Window {
         GLFW.glfwPollEvents();
     }
 
+    @Override
+    public Long getWindowId() {
+        return getWindowPointer();
+    }
+
     public long getWindowPointer() {
         if(windowPointer == 0) {
             throw new IllegalStateException("Window has not been initialized yet. WindowPointer: " + windowPointer);
