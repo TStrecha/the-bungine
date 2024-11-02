@@ -4,6 +4,7 @@ import org.thebungine.engine.event.Event;
 
 public abstract class Layer {
 
+    @SuppressWarnings("unused")
     public String getName() {
         return "Layer";
     }

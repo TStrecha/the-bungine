@@ -22,6 +22,7 @@ import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+@SuppressWarnings("unused")
 public class WindowsWindow implements Window {
 
     private long windowPointer;
