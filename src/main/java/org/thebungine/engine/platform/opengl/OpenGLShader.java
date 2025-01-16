@@ -1,6 +1,7 @@
 package org.thebungine.engine.platform.opengl;
 
 import org.joml.Matrix4f;
+import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.system.MemoryStack;
@@ -55,6 +56,14 @@ public class OpenGLShader extends Shader {
 
             GL20.glUniformMatrix4fv(location, false, buffer);
         }
+    }
+
+    @Override
+    public void uploadUniformVec4f(String name, Vector4f data) {
+        GL20.glUseProgram(programId);
+
+        var location = GL20.glGetUniformLocation(programId, name);
+        GL20.glUniform4f(location, data.x, data.y, data.z, data.w);
     }
 
     @Override

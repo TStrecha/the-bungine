@@ -2,6 +2,9 @@ package org.thebungine.engine.platform.opengl;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
 import org.thebungine.engine.render.buffer.IndexBuffer;
 import org.thebungine.engine.render.buffer.VertexArray;
 import org.thebungine.engine.render.buffer.VertexBuffer;
@@ -9,14 +12,6 @@ import org.thebungine.engine.render.buffer.layout.ShaderDataType;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.lwjgl.opengl.GL11.GL_FLOAT;
-import static org.lwjgl.opengl.GL11.GL_INT;
-import static org.lwjgl.opengl.GL20.GL_BOOL;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class OpenGLVertexArray extends VertexArray {
 
@@ -29,12 +24,12 @@ public class OpenGLVertexArray extends VertexArray {
 
     public OpenGLVertexArray() {
         this.vertexBuffers = new ArrayList<>();
-        this.vertexArrayId = glGenVertexArrays();
+        this.vertexArrayId = GL30.glGenVertexArrays();
     }
 
     @Override
     public void addVertexBuffer(VertexBuffer vertexBuffer) {
-        glBindVertexArray(vertexArrayId);
+        GL30.glBindVertexArray(vertexArrayId);
         vertexBuffer.bind();
 
         var bufferLayout = vertexBuffer.getBufferLayout();
@@ -42,15 +37,15 @@ public class OpenGLVertexArray extends VertexArray {
         for (int i = 0; i < bufferLayout.getElements().size(); i++) {
             var element = bufferLayout.getElements().get(i);
 
-            glEnableVertexAttribArray(i);
-            glVertexAttribPointer(i, element.getType().getElementCount(), getGLType(element.getType()), element.isNormalized(), bufferLayout.getStride(), element.getOffset());
+            GL20.glEnableVertexAttribArray(i);
+            GL20.glVertexAttribPointer(i, element.getType().getElementCount(), getGLType(element.getType()), element.isNormalized(), bufferLayout.getStride(), element.getOffset());
         }
 
         vertexBuffers.add(vertexBuffer);
     }
 
     public void setIndexBuffer(IndexBuffer indexBuffer) {
-        glBindVertexArray(vertexArrayId);
+        GL30.glBindVertexArray(vertexArrayId);
         indexBuffer.bind();
 
         this.indexBuffer = indexBuffer;
@@ -58,19 +53,19 @@ public class OpenGLVertexArray extends VertexArray {
 
     @Override
     public void bind() {
-        glBindVertexArray(vertexArrayId);
+        GL30.glBindVertexArray(vertexArrayId);
     }
 
     @Override
     public void unbind() {
-        glBindVertexArray(0);
+        GL30.glBindVertexArray(0);
     }
 
     private int getGLType(ShaderDataType shaderType) {
         return switch (shaderType) {
-            case FLOAT, FLOAT_2, FLOAT_3, FLOAT_4, MAT_3, MAT_4 -> GL_FLOAT;
-            case INT, INT_2, INT_3, INT_4 -> GL_INT;
-            case BOOL -> GL_BOOL;
+            case FLOAT, FLOAT_2, FLOAT_3, FLOAT_4, MAT_3, MAT_4 -> GL11.GL_FLOAT;
+            case INT, INT_2, INT_3, INT_4 -> GL11.GL_INT;
+            case BOOL -> GL20.GL_BOOL;
         };
     }
 
