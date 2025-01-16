@@ -1,5 +1,6 @@
 package org.thebungine.engine.layer;
 
+import org.thebungine.engine.util.TimeStep;
 import org.thebungine.engine.event.Event;
 
 public abstract class Layer {
@@ -12,7 +13,7 @@ public abstract class Layer {
     public void onAttach() {}
     public void onDeAttach() {}
 
-    public abstract void onUpdate();
+    public abstract void onUpdate(TimeStep timeStep);
 
     public void onEvent(Event event) {}
 }

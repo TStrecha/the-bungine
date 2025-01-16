@@ -37,15 +37,13 @@ public class EventDispatcher {
         generalListeners.forEach(listener -> listener.onEvent(event));
     }
 
-
-
-    private static EventDispatcher INSTANCE;
+    private static EventDispatcher instance;
 
     public static EventDispatcher getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new EventDispatcher();
+        if(instance == null) {
+            instance = new EventDispatcher();
         }
 
-        return INSTANCE;
+        return instance;
     }
 }

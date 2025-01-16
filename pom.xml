@@ -98,6 +98,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.joml</groupId>
+            <artifactId>joml</artifactId>
+            <version>1.10.8</version>
+        </dependency>
+
+
         <!-- LOGGING -->
         <dependency>
             <groupId>org.slf4j</groupId>

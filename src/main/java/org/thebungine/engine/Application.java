@@ -1,37 +1,42 @@
 package org.thebungine.engine;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.thebungine.engine.event.Event;
 import org.thebungine.engine.event.EventDispatcher;
 import org.thebungine.engine.event.WindowCloseEvent;
+import org.thebungine.engine.layer.ImguiLayer;
 import org.thebungine.engine.layer.Layer;
 import org.thebungine.engine.layer.LayerStack;
+import org.thebungine.engine.util.TimeStep;
 import org.thebungine.engine.window.Window;
 import lombok.Setter;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.glfw.GLFW.glfwGetTime;
 
+@Slf4j
 public abstract class Application {
 
-    private static Application INSTANCE = null;
+    @Getter
+    private static Application instance = null;
+
+    private float lastFrameTime = 0;
 
 
     private final LayerStack layerStack = new LayerStack();
+    private final ImguiLayer imguiLayer = new ImguiLayer();
     private Boolean running = true;
 
     @Getter
     @Setter
     private Window window;
 
-    public Application() {
-        INSTANCE = this;
+    protected Application() {
+        instance = this;
 
         EventDispatcher.getInstance().registerGeneralListener(this::onEvent);
 
-        EventDispatcher.getInstance().registerListener(WindowCloseEvent.class, (event) -> running = false);
+        EventDispatcher.getInstance().registerListener(WindowCloseEvent.class, event -> running = false);
     }
 
     public void pushLayer(Layer layer) {
@@ -57,19 +62,20 @@ public abstract class Application {
     }
 
     public void run() {
-        while(running) {
-            glClearColor(0.12f, 0.1f, 0.12f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        imguiLayer.onAttach();
 
-            this.layerStack.getLayers().forEach(Layer::onUpdate);
+        while(running) {
+            var time = (float) glfwGetTime();
+            var timeStep = new TimeStep(time - lastFrameTime);
+            this.lastFrameTime = time;
+
+            imguiLayer.onUpdate(timeStep);
+            this.layerStack.getLayers().forEach(layer -> layer.onUpdate(timeStep));
             window.onUpdate();
         }
 
         window.destroy();
         layerStack.getLayers().forEach(Layer::onDeAttach);
     }
-
-    public static Application getInstance() {
-        return INSTANCE;
-    }
 }
+

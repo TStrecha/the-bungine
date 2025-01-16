@@ -7,6 +7,7 @@ import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import org.thebungine.engine.Application;
+import org.thebungine.engine.util.TimeStep;
 
 import static org.lwjgl.glfw.GLFW.glfwGetCurrentContext;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
@@ -31,6 +32,7 @@ public class ImguiLayer extends Layer {
         io.addBackendFlags(ImGuiBackendFlags.HasMouseCursors);
         io.addBackendFlags(ImGuiBackendFlags.HasSetMousePos);
 
+        io.addConfigFlags(ImGuiConfigFlags.NavEnableKeyboard);
         io.addConfigFlags(ImGuiConfigFlags.DockingEnable);
         io.addConfigFlags(ImGuiConfigFlags.ViewportsEnable);
 
@@ -51,7 +53,7 @@ public class ImguiLayer extends Layer {
     }
 
     @Override
-    public void onUpdate() {
+    public void onUpdate(TimeStep timeStep) {
         imGuiGlfw.newFrame();
         ImGui.newFrame();
         ImGui.dockSpaceOverViewport();
