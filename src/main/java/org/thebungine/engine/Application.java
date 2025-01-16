@@ -71,6 +71,12 @@ public abstract class Application {
 
             imguiLayer.onUpdate(timeStep);
             this.layerStack.getLayers().forEach(layer -> layer.onUpdate(timeStep));
+
+            imguiLayer.beginRender();
+            this.layerStack.getLayers().forEach(layer -> layer.renderImGui(timeStep));
+            imguiLayer.renderImGui(timeStep);
+            imguiLayer.endRender();
+
             window.onUpdate();
         }
 

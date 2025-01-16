@@ -15,5 +15,9 @@ public abstract class Layer {
 
     public abstract void onUpdate(TimeStep timeStep);
 
+    public void renderImGui(TimeStep timeStep) {
+
+    }
+
     public void onEvent(Event event) {}
 }

@@ -54,17 +54,20 @@ public class ImguiLayer extends Layer {
 
     @Override
     public void onUpdate(TimeStep timeStep) {
+    }
+
+    public void beginRender() {
         imGuiGlfw.newFrame();
         ImGui.newFrame();
-        ImGui.dockSpaceOverViewport();
+//        ImGui.dockSpaceOverViewport();
+    }
 
-        ImGui.showDemoWindow();
-
+    public void endRender() {
         ImGui.render();
         imGuiGl3.renderDrawData(ImGui.getDrawData());
 
         if (io.hasConfigFlags(ImGuiConfigFlags.ViewportsEnable)) {
-            final long backupWindowPtr = glfwGetCurrentContext();
+            var backupWindowPtr = glfwGetCurrentContext();
             ImGui.updatePlatformWindows();
             ImGui.renderPlatformWindowsDefault();
             glfwMakeContextCurrent(backupWindowPtr);
