@@ -17,4 +17,8 @@ public class RenderCommand {
     public void drawIndexed(VertexArray vertexArray) {
         RendererAPI.getInstance().drawIndexed(vertexArray);
     }
+
+    public static void init() {
+        RendererAPI.getInstance().init();
+    }
 }

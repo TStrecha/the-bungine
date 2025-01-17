@@ -11,7 +11,4 @@ public abstract class Shader {
 
     public abstract void bind();
     public abstract void unbind();
-
-    public abstract void uploadUniformMat4(String name, Matrix4f data);
-    public abstract void uploadUniformVec4f(String name, Vector4f data);
 }

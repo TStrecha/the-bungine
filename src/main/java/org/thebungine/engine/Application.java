@@ -8,6 +8,7 @@ import org.thebungine.engine.event.WindowCloseEvent;
 import org.thebungine.engine.layer.ImguiLayer;
 import org.thebungine.engine.layer.Layer;
 import org.thebungine.engine.layer.LayerStack;
+import org.thebungine.engine.render.Renderer;
 import org.thebungine.engine.util.TimeStep;
 import org.thebungine.engine.window.Window;
 import lombok.Setter;
@@ -62,7 +63,9 @@ public abstract class Application {
     }
 
     public void run() {
+        //TODO(TS): Move to constructor
         imguiLayer.onAttach();
+        Renderer.init();
 
         while(running) {
             var time = (float) glfwGetTime();

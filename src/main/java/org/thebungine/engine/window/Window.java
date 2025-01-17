@@ -9,4 +9,7 @@ public interface Window {
     void destroy();
 
     void onUpdate();
+
+    boolean isVSync();
+    void setVSync(boolean vSync);
 }

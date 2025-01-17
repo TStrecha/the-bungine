@@ -4,6 +4,10 @@ public class Renderer {
 
     private static Scene currentScene = null;
 
+    public static void init() {
+        RenderCommand.init();
+    }
+
     public static Scene beginScene() {
         currentScene = new Scene();
 

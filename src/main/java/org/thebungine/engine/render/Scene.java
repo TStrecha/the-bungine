@@ -1,6 +1,7 @@
 package org.thebungine.engine.render;
 
 import org.joml.Matrix4f;
+import org.thebungine.engine.platform.opengl.OpenGLShader;
 import org.thebungine.engine.render.buffer.VertexArray;
 import org.thebungine.engine.render.shader.Shader;
 
@@ -24,8 +25,8 @@ public class Scene {
         shader.bind();
         vertexArray.bind();
 
-        shader.uploadUniformMat4("uViewProjection", camera.getViewProjection());
-        shader.uploadUniformMat4("uTransform", transform);
+        ((OpenGLShader)shader).uploadUniformMat4("uViewProjection", camera.getViewProjection());
+        ((OpenGLShader)shader).uploadUniformMat4("uTransform", transform);
 
         RenderCommand.drawIndexed(vertexArray);
 

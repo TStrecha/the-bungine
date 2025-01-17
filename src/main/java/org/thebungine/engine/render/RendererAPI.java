@@ -20,4 +20,6 @@ public abstract class RendererAPI {
     public abstract void clear();
 
     public abstract void drawIndexed(VertexArray vertexArray);
+
+    public abstract void init();
 }

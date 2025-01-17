@@ -46,7 +46,13 @@ public class OpenGLShader extends Shader {
         }
     }
 
-    @Override
+    public void uploadUniformInt(String name, int data) {
+        GL20.glUseProgram(programId);
+
+        var location = GL20.glGetUniformLocation(programId, name);
+        GL20.glUniform1i(location, data);
+    }
+
     public void uploadUniformMat4(String name, Matrix4f data) {
         GL20.glUseProgram(programId);
 
@@ -58,7 +64,6 @@ public class OpenGLShader extends Shader {
         }
     }
 
-    @Override
     public void uploadUniformVec4f(String name, Vector4f data) {
         GL20.glUseProgram(programId);
 

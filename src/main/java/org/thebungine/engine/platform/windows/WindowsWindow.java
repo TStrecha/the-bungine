@@ -17,6 +17,8 @@ public class WindowsWindow implements Window {
 
     private long windowPointer;
 
+    private boolean vSync;
+
     public WindowsWindow(WindowProperties properties) {
         init(properties);
     }
@@ -45,9 +47,10 @@ public class WindowsWindow implements Window {
         }
 
         GLFW.glfwMakeContextCurrent(getWindowPointer());
-        GLFW.glfwSwapInterval(1);
         GLFW.glfwShowWindow(getWindowPointer());
         GL.createCapabilities();
+
+        setVSync(true);
     }
 
     @Override
@@ -61,6 +64,23 @@ public class WindowsWindow implements Window {
     public void onUpdate() {
         GLFW.glfwSwapBuffers(getWindowPointer());
         GLFW.glfwPollEvents();
+    }
+
+    @Override
+    public boolean isVSync() {
+        return vSync;
+    }
+
+    @Override
+    public void setVSync(boolean vSync) {
+        if(vSync) {
+            GLFW.glfwSwapInterval(1);
+
+        } else {
+            GLFW.glfwSwapInterval(0);
+        }
+
+        this.vSync = vSync;
     }
 
     @Override

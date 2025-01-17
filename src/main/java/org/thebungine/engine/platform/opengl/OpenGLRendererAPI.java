@@ -20,4 +20,10 @@ public class OpenGLRendererAPI extends RendererAPI {
     public void drawIndexed(VertexArray vertexArray) {
         GL11.glDrawElements(GL11.GL_TRIANGLES, vertexArray.getIndexBuffer().getCount(), GL11.GL_UNSIGNED_INT, 0);
     }
+
+    @Override
+    public void init() {
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+    }
 }
