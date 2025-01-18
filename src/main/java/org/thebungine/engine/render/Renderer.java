@@ -1,6 +1,11 @@
 package org.thebungine.engine.render;
 
+import lombok.Getter;
+
 public class Renderer {
+
+    @Getter
+    private static final RendererType rendererType = RendererType.OPENGL;
 
     private static Scene currentScene = null;
 

@@ -1,4 +1,4 @@
-package org.thebungine.engine.platform.windows;
+package org.thebungine.engine.platform.opengl;
 
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
@@ -9,7 +9,7 @@ import org.thebungine.engine.input.MouseButtonCode;
 
 import java.nio.DoubleBuffer;
 
-public class WindowsInput extends Input {
+public class OpenGLInput extends Input {
 
     @Override
     public boolean isKeyPressed(KeyCode key) {

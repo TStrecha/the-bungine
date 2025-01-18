@@ -3,7 +3,7 @@ package org.thebungine.engine.platform.opengl;
 import lombok.Getter;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL45;
-import org.thebungine.engine.render.texture.Texture;
+import org.thebungine.engine.render.texture.Texture2D;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 @Getter
-public class OpenGLTexture2D implements Texture {
+public class OpenGLTexture2D implements Texture2D {
 
     private final int textureId;
 

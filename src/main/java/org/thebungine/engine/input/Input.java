@@ -1,7 +1,7 @@
 package org.thebungine.engine.input;
 
 import org.joml.Vector2f;
-import org.thebungine.engine.platform.windows.WindowsInput;
+import org.thebungine.engine.core.BungineContext;
 
 public abstract class Input {
 
@@ -9,7 +9,7 @@ public abstract class Input {
 
     public static Input getInstance() {
         if(instance == null) {
-            instance = new WindowsInput();
+            instance = BungineContext.getInstance().getRendererFactory().instantiateInput();
         }
 
         return instance;

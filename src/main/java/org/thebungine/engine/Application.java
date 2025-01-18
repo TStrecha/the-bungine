@@ -2,6 +2,8 @@ package org.thebungine.engine;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.thebungine.engine.core.BungineContext;
+import org.thebungine.engine.core.RendererFactory;
 import org.thebungine.engine.event.Event;
 import org.thebungine.engine.event.EventDispatcher;
 import org.thebungine.engine.event.WindowCloseEvent;
@@ -21,23 +23,28 @@ public abstract class Application {
     @Getter
     private static Application instance = null;
 
-    private float lastFrameTime = 0;
-
+    @Getter
+    protected final BungineContext bungineContext;
 
     private final LayerStack layerStack = new LayerStack();
     private final ImguiLayer imguiLayer = new ImguiLayer();
+
     private Boolean running = true;
+    private float lastFrameTime = 0;
 
     @Getter
     @Setter
     private Window window;
 
     protected Application() {
-        instance = this;
+        Application.instance = this;
+        this.bungineContext = BungineContext.getInstance();
 
         EventDispatcher.getInstance().registerGeneralListener(this::onEvent);
-
         EventDispatcher.getInstance().registerListener(WindowCloseEvent.class, event -> running = false);
+
+        imguiLayer.onAttach();
+        Renderer.init();
     }
 
     public void pushLayer(Layer layer) {
@@ -63,10 +70,6 @@ public abstract class Application {
     }
 
     public void run() {
-        //TODO(TS): Move to constructor
-        imguiLayer.onAttach();
-        Renderer.init();
-
         while(running) {
             var time = (float) glfwGetTime();
             var timeStep = new TimeStep(time - lastFrameTime);
@@ -85,6 +88,7 @@ public abstract class Application {
 
         window.destroy();
         layerStack.getLayers().forEach(Layer::onDeAttach);
+        imguiLayer.onDeAttach();
     }
 }
 

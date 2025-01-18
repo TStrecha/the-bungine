@@ -1,6 +1,6 @@
 package org.thebungine.engine.render;
 
-import org.thebungine.engine.platform.opengl.OpenGLRendererAPI;
+import org.thebungine.engine.core.BungineContext;
 import org.thebungine.engine.render.buffer.VertexArray;
 
 public abstract class RendererAPI {
@@ -9,7 +9,7 @@ public abstract class RendererAPI {
 
     public static RendererAPI getInstance() {
         if(instance == null) {
-            instance = new OpenGLRendererAPI();
+            instance = BungineContext.getInstance().getRendererFactory().instantiateRendererAPI();
         }
 
         return instance;

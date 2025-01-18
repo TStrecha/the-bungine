@@ -1,6 +1,5 @@
-package org.thebungine.engine.platform.windows;
+package org.thebungine.engine.platform.opengl;
 
-import lombok.extern.slf4j.Slf4j;
 import org.thebungine.engine.event.EventDispatcher;
 import org.thebungine.engine.event.WindowCloseEvent;
 import org.lwjgl.glfw.Callbacks;
@@ -13,13 +12,13 @@ import org.thebungine.engine.window.WindowProperties;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 @SuppressWarnings("unused")
-public class WindowsWindow implements Window {
+public class OpenGLWindow implements Window {
 
     private long windowPointer;
 
     private boolean vSync;
 
-    public WindowsWindow(WindowProperties properties) {
+    public OpenGLWindow(WindowProperties properties) {
         init(properties);
     }
 
