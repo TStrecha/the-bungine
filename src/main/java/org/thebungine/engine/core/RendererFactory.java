@@ -14,15 +14,17 @@ import org.thebungine.engine.window.Window;
 import org.thebungine.engine.window.WindowProperties;
 
 import java.io.IOException;
+import java.net.URL;
 
 public interface RendererFactory {
 
     Window createWindow(WindowProperties windowProperties);
     Shader createShader(String vertexShader, String fragmentShader);
+    Shader createShader(URL shaderPath) throws IOException;
     VertexBuffer createVertexBuffer(float[] vertices);
     IndexBuffer createIndexBuffer(int[] indices);
     VertexArray createVertexArray();
-    Texture2D createTexture2D(String path) throws IOException;
+    Texture2D createTexture2D(URL texturePath) throws IOException;
 
     RendererAPI instantiateRendererAPI();
     Input instantiateInput();

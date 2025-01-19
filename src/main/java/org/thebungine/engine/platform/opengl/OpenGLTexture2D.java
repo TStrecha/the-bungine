@@ -8,6 +8,7 @@ import org.thebungine.engine.render.texture.Texture2D;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.ByteBuffer;
 
 @Getter
@@ -21,8 +22,8 @@ public class OpenGLTexture2D implements Texture2D {
     private final int channels;
 
 
-    public OpenGLTexture2D(String path) throws IOException {
-        this.path = path;
+    public OpenGLTexture2D(URL texturePath) throws IOException {
+        this.path = texturePath.getPath();
         var image = ImageIO.read(new File(path));
 
         this.width = image.getWidth();

@@ -3,7 +3,6 @@ package org.thebungine.engine;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.thebungine.engine.core.BungineContext;
-import org.thebungine.engine.core.RendererFactory;
 import org.thebungine.engine.event.Event;
 import org.thebungine.engine.event.EventDispatcher;
 import org.thebungine.engine.event.WindowCloseEvent;
@@ -14,6 +13,7 @@ import org.thebungine.engine.render.Renderer;
 import org.thebungine.engine.util.TimeStep;
 import org.thebungine.engine.window.Window;
 import lombok.Setter;
+import org.thebungine.engine.window.WindowProperties;
 
 import static org.lwjgl.glfw.GLFW.glfwGetTime;
 
@@ -36,12 +36,14 @@ public abstract class Application {
     @Setter
     private Window window;
 
-    protected Application() {
+    protected Application(WindowProperties windowProperties) {
         Application.instance = this;
         this.bungineContext = BungineContext.getInstance();
 
         EventDispatcher.getInstance().registerGeneralListener(this::onEvent);
         EventDispatcher.getInstance().registerListener(WindowCloseEvent.class, event -> running = false);
+
+        this.window = bungineContext.getRendererFactory().createWindow(windowProperties);
 
         imguiLayer.onAttach();
         Renderer.init();

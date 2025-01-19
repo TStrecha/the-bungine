@@ -9,11 +9,15 @@ import org.thebungine.engine.render.buffer.IndexBuffer;
 import org.thebungine.engine.render.buffer.VertexArray;
 import org.thebungine.engine.render.buffer.VertexBuffer;
 import org.thebungine.engine.render.shader.Shader;
+import org.thebungine.engine.render.shader.ShaderType;
 import org.thebungine.engine.render.texture.Texture2D;
 import org.thebungine.engine.window.Window;
 import org.thebungine.engine.window.WindowProperties;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Scanner;
 
 public class OpenGLFactory implements RendererFactory {
 
@@ -25,6 +29,39 @@ public class OpenGLFactory implements RendererFactory {
     @Override
     public Shader createShader(String vertexShader, String fragmentShader) {
         return new OpenGLShader(vertexShader, fragmentShader);
+    }
+
+    @Override
+    public Shader createShader(URL shaderPath) throws IOException {
+        var file = new File(shaderPath.getPath());
+        try (var scanner = new Scanner(file)) {
+            var vertexShader = new StringBuilder();
+            var fragmentShader = new StringBuilder();
+
+            ShaderType type = null;
+
+            while (scanner.hasNextLine()) {
+                var line = scanner.nextLine();
+                var lineWithoutSpaces = line.trim().replace(" ", "");
+
+                if (lineWithoutSpaces.startsWith("#type")) {
+                    type = ShaderType.valueOf(lineWithoutSpaces.replace("#type", "").toUpperCase());
+                    continue;
+                }
+
+                if (line.isEmpty() || type == null) {
+                    continue;
+                }
+
+                if (type == ShaderType.VERTEX) {
+                    vertexShader.append(line).append("\n");
+                } else if (type == ShaderType.FRAGMENT) {
+                    fragmentShader.append(line).append("\n");
+                }
+            }
+
+            return createShader(vertexShader.toString(), fragmentShader.toString());
+        }
     }
 
     @Override
@@ -43,8 +80,8 @@ public class OpenGLFactory implements RendererFactory {
     }
 
     @Override
-    public Texture2D createTexture2D(String path) throws IOException {
-        return new OpenGLTexture2D(path);
+    public Texture2D createTexture2D(URL texturePath) throws IOException {
+        return new OpenGLTexture2D(texturePath);
     }
 
     @Override
