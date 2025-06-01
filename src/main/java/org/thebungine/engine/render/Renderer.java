@@ -13,6 +13,10 @@ public class Renderer {
         RenderCommand.init();
     }
 
+    public static void onWindowResize(int width, int height) {
+        RenderCommand.setViewport(0, 0, width, height);
+    }
+
     public static Scene beginScene() {
         currentScene = new Scene();
 

@@ -6,6 +6,7 @@ import org.thebungine.engine.core.BungineContext;
 import org.thebungine.engine.event.Event;
 import org.thebungine.engine.event.EventDispatcher;
 import org.thebungine.engine.event.WindowCloseEvent;
+import org.thebungine.engine.event.WindowResizeEvent;
 import org.thebungine.engine.layer.ImguiLayer;
 import org.thebungine.engine.layer.Layer;
 import org.thebungine.engine.layer.LayerStack;
@@ -29,7 +30,8 @@ public abstract class Application {
     private final LayerStack layerStack = new LayerStack();
     private final ImguiLayer imguiLayer = new ImguiLayer();
 
-    private Boolean running = true;
+    private boolean running = true;
+    private boolean minimized = true;
     private float lastFrameTime = 0;
 
     @Getter
@@ -41,6 +43,7 @@ public abstract class Application {
         this.bungineContext = BungineContext.getInstance();
 
         EventDispatcher.getInstance().registerGeneralListener(this::onEvent);
+        EventDispatcher.getInstance().registerListener(WindowResizeEvent.class, this::onWidowResizeEvent);
         EventDispatcher.getInstance().registerListener(WindowCloseEvent.class, event -> running = false);
 
         this.window = bungineContext.getRendererFactory().createWindow(windowProperties);
@@ -91,6 +94,16 @@ public abstract class Application {
         window.destroy();
         layerStack.getLayers().forEach(Layer::onDeAttach);
         imguiLayer.onDeAttach();
+    }
+
+    public void onWidowResizeEvent(WindowResizeEvent event) {
+        if(event.getWidth() == 0 || event.getHeight() == 0) {
+            minimized = true;
+            return;
+        }
+
+        minimized = false;
+        Renderer.onWindowResize(event.getWidth(), event.getHeight());
     }
 }
 

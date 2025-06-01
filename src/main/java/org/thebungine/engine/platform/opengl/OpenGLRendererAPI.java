@@ -12,6 +12,11 @@ public class OpenGLRendererAPI extends RendererAPI {
     }
 
     @Override
+    public void setViewport(int x, int y, int width, int height) {
+        GL11.glViewport(x, y, width, height);
+    }
+
+    @Override
     public void clear() {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
     }

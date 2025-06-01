@@ -10,6 +10,10 @@ public class RenderCommand {
         RendererAPI.getInstance().setClearColor(red, green, blue, alpha);
     }
 
+    public static void setViewport(int x, int y, int width, int height) {
+        RendererAPI.getInstance().setViewport(x, y, width, height);
+    }
+
     public void clear() {
         RendererAPI.getInstance().clear();
     }

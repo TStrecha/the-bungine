@@ -1,4 +1,4 @@
-package org.thebungine.engine.render;
+package org.thebungine.engine.render.camera;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,8 @@ import org.joml.Vector3f;
 @Getter
 public class OrthographicCamera {
 
-    private final Matrix4f projection;
+    @Setter
+    private Matrix4f projection;
     private final Matrix4f view = new Matrix4f();
     private final Matrix4f viewProjection = new Matrix4f();
 
@@ -28,5 +29,9 @@ public class OrthographicCamera {
 
         transform.invert(view);
         projection.mul(view, viewProjection);
+    }
+
+    public void setProjection(float left, float right, float bottom, float top) {
+        this.projection = new Matrix4f().ortho(left, right, bottom, top, -1.0f, 1.0f);
     }
 }
