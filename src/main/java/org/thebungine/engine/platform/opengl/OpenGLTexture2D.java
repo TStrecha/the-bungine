@@ -2,7 +2,7 @@ package org.thebungine.engine.platform.opengl;
 
 import lombok.Getter;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL45;
+import org.lwjgl.opengl.GL13;
 import org.thebungine.engine.render.texture.Texture2D;
 
 import javax.imageio.ImageIO;
@@ -20,7 +20,6 @@ public class OpenGLTexture2D implements Texture2D {
     private final int width;
     private final int height;
     private final int channels;
-
 
     public OpenGLTexture2D(URL texturePath) throws IOException {
         this.path = texturePath.getPath();
@@ -45,25 +44,25 @@ public class OpenGLTexture2D implements Texture2D {
         }
         buffer.flip();
 
-        this.textureId = GL45.glCreateTextures(GL11.GL_TEXTURE_2D);
-        if(channels == 3) {
-            GL45.glTextureStorage2D(textureId, 1, GL11.GL_RGB8, width, height);
+        this.textureId = GL11.glGenTextures();
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureId);
+
+        if (channels == 3) {
+            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB8, width, height, 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
         } else {
-            GL45.glTextureStorage2D(textureId, 1, GL11.GL_RGBA8, width, height);
+            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, width, height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
         }
 
-        GL45.glTextureParameteri(textureId, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-        GL45.glTextureParameteri(textureId, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
-        if(channels == 3) {
-            GL45.glTextureSubImage2D(textureId, 0, 0, 0, width, height, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
-        } else {
-            GL45.glTextureSubImage2D(textureId, 0, 0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
-        }
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
     }
 
 
     @Override
     public void bind(int slot) {
-        GL45.glBindTextureUnit(slot, textureId);
+        GL13.glActiveTexture(GL13.GL_TEXTURE0 + slot);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureId);
     }
 }

@@ -38,16 +38,16 @@ public class ImguiLayer extends Layer {
 
         io.setDisplaySize(1920, 1080);
 
-        imGuiGlfw.init(Application.getInstance().getWindow().getWindowId(), false);
-        imGuiGl3.init("#version 130");
+        imGuiGlfw.init(Application.getInstance().getWindow().getWindowId(), true);
+        imGuiGl3.init("#version 150");
 
         ImGui.styleColorsDark();
     }
 
     @Override
     public void onDeAttach() {
-        imGuiGl3.dispose();
-        imGuiGlfw.dispose();
+        imGuiGl3.shutdown();
+        imGuiGlfw.shutdown();
 
         ImGui.destroyContext();
     }
@@ -58,6 +58,7 @@ public class ImguiLayer extends Layer {
 
     public void beginRender() {
         imGuiGlfw.newFrame();
+        imGuiGl3.newFrame();
         ImGui.newFrame();
 //        ImGui.dockSpaceOverViewport();
     }

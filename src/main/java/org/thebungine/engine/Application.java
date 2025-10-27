@@ -42,11 +42,11 @@ public abstract class Application {
         Application.instance = this;
         this.bungineContext = BungineContext.getInstance();
 
+        this.window = bungineContext.getRendererFactory().createWindow(windowProperties);
+
         EventDispatcher.getInstance().registerGeneralListener(this::onEvent);
         EventDispatcher.getInstance().registerListener(WindowResizeEvent.class, this::onWidowResizeEvent);
         EventDispatcher.getInstance().registerListener(WindowCloseEvent.class, event -> running = false);
-
-        this.window = bungineContext.getRendererFactory().createWindow(windowProperties);
 
         imguiLayer.onAttach();
         Renderer.init();
