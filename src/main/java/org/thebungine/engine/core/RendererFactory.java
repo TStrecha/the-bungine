@@ -25,6 +25,7 @@ public interface RendererFactory {
     IndexBuffer createIndexBuffer(int[] indices);
     VertexArray createVertexArray();
     Texture2D createTexture2D(URL texturePath) throws IOException;
+    Texture2D createTexture2D(int width, int height, int channels);
 
     RendererAPI instantiateRendererAPI();
     Input instantiateInput();
@@ -32,7 +33,7 @@ public interface RendererFactory {
     RendererType getRendererType();
 
     static RendererFactory instantiate(RendererType rendererType) {
-        return switch (Renderer.getRendererType()) {
+        return switch (rendererType) {
             case OPENGL -> new OpenGLFactory();
         };
     }

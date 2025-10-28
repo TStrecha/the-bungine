@@ -26,8 +26,8 @@ public class Scene {
         shader.bind();
         vertexArray.bind();
 
-        ((OpenGLShader)shader).uploadUniformMat4("uViewProjection", camera.getViewProjection());
-        ((OpenGLShader)shader).uploadUniformMat4("uTransform", transform);
+        shader.setMat4("uViewProjection", camera.getViewProjection());
+        shader.setMat4("uTransform", transform);
 
         RenderCommand.drawIndexed(vertexArray);
 

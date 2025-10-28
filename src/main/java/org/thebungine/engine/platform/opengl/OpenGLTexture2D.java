@@ -16,7 +16,7 @@ public class OpenGLTexture2D implements Texture2D {
 
     private final int textureId;
 
-    private final String path;
+    private String path;
     private final int width;
     private final int height;
     private final int channels;
@@ -57,6 +57,43 @@ public class OpenGLTexture2D implements Texture2D {
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+    }
+
+    public OpenGLTexture2D(int width, int height, int channels) {
+        this.width = width;
+        this.height = height;
+        this.channels = channels;
+
+        this.textureId = GL11.glGenTextures();
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureId);
+
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+    }
+
+    public void setData(int[] data) {
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureId);
+
+        var buffer = ByteBuffer.allocateDirect(width * height * channels);
+        for (int y = height - 1; y >= 0; y--) {
+            for (var x = 0; x < width; x++) {
+                var pixel = data[y * width + x];
+
+                buffer.put((byte) ((pixel >> 16) & 0xFF)); // Red
+                buffer.put((byte) ((pixel >> 8) & 0xFF));  // Green
+                buffer.put((byte) (pixel & 0xFF));         // Blue
+                buffer.put((byte) ((pixel >> 24) & 0xFF)); // Alpha
+            }
+        }
+        buffer.flip();
+
+        if (channels == 3) {
+            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB8, this.width, this.height, 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
+        } else {
+            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, this.width, this.height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
+        }
     }
 
 

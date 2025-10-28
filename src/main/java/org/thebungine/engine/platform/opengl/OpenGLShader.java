@@ -1,6 +1,7 @@
 package org.thebungine.engine.platform.opengl;
 
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
@@ -46,14 +47,14 @@ public class OpenGLShader extends Shader {
         }
     }
 
-    public void uploadUniformInt(String name, int data) {
+    private void uploadUniformInt(String name, int data) {
         GL20.glUseProgram(programId);
 
         var location = GL20.glGetUniformLocation(programId, name);
         GL20.glUniform1i(location, data);
     }
 
-    public void uploadUniformMat4(String name, Matrix4f data) {
+    private void uploadUniformMat4(String name, Matrix4f data) {
         GL20.glUseProgram(programId);
 
         var location = GL20.glGetUniformLocation(programId, name);
@@ -64,11 +65,39 @@ public class OpenGLShader extends Shader {
         }
     }
 
-    public void uploadUniformVec4f(String name, Vector4f data) {
+    private void uploadUniformVec3f(String name, Vector3f data) {
+        GL20.glUseProgram(programId);
+
+        var location = GL20.glGetUniformLocation(programId, name);
+        GL20.glUniform3f(location, data.x, data.y, data.z);
+    }
+
+    private void uploadUniformVec4f(String name, Vector4f data) {
         GL20.glUseProgram(programId);
 
         var location = GL20.glGetUniformLocation(programId, name);
         GL20.glUniform4f(location, data.x, data.y, data.z, data.w);
+    }
+
+    @Override
+    public void setInt(String name, Integer data) {
+        uploadUniformInt(name, data);
+    }
+
+    @Override
+    public void setMat4(String name, Matrix4f data) {
+        uploadUniformMat4(name, data);
+    }
+
+    @Override
+    public void setFloat3(String name, Vector3f data) {
+        uploadUniformVec3f(name, data);
+    }
+
+    @Override
+    public void setFloat4(String name, Vector4f data) {
+        uploadUniformVec4f(name, data);
+
     }
 
     @Override

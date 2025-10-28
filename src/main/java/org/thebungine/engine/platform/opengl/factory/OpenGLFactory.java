@@ -85,6 +85,11 @@ public class OpenGLFactory implements RendererFactory {
     }
 
     @Override
+    public Texture2D createTexture2D(int width, int height, int channels) {
+        return new OpenGLTexture2D(width, height, channels);
+    }
+
+    @Override
     public RendererAPI instantiateRendererAPI() {
         return new OpenGLRendererAPI();
     }
